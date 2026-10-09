@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: barista-clicker
     steps:
       - name: Kodu al
         uses: actions/checkout@v4
@@ -26,6 +29,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: barista-clicker/package-lock.json
 
       - name: Bağımlılıkları yükle
         run: npm ci
@@ -39,7 +43,7 @@ jobs:
       - name: Derlenen siteyi yükle
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: barista-clicker/dist
 
   deploy:
     needs: build
